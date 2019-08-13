@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+    {% if title %}
+    <title>Django Blog - {{ title }}</title>
+    {% else %}
+    <title>Django Blog</title>
+    {% endif %}
+</head>
+
+<body>
+    <div class="site">
+        <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+        <header class="masthead">
+            <small class="alignleft">
+                <a href="/">Django Blog</a>&nbsp;&nbsp;
+                <a href="{% url 'blog-home' %}">Home</a>&nbsp;
+                <a href="{% url 'blog-about' %}">About</a>&nbsp;
+            </small>
+            <small class="alignright">
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">Profile</a>&nbsp;
+                <a href="{% url 'logout' %}">Logout</a>&nbsp;
+                {% else %}
+                <a href="{% url 'register' %}">Register</a>&nbsp;
+                <a href="{% url 'login' %}">Login</a>&nbsp;
+                {% endif %}
+            </small>
+        </header><!-- .masthead -->
+
+        <main id="content" role="main" class="main-content">
+            <div class="container">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+
+
+        <aside class="sidebar">
+            <h3>The Sidebar</h3>
+            <p>The sidebar typically contains things like:</p>
+            <ul>
+                <li>Links</li>
+                <li>Menus</li>
+                <li>Ads</li>
+            </ul>
+        </aside>
+
+        <aside class="twin">
+            This should take up half the space
+        </aside>
+        <aside class="twin">
+            This should take up the other half of the space
+        </aside>
+
+        <footer class="colophon grid">
+            <aside><small>Content, layout, design: <a href="https://twitter.com/mor10" target="_blank"
+                        rel="nofollow">Morten Rand-Hendriksen</a>.</small></aside>
+        </footer>
+    </div>
+</body>
+
+</html>
